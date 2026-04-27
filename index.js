@@ -1,5 +1,6 @@
 const canvas = document.querySelector('canvas');
 const c = canvas.getContext('2d');
+// 1-02-04
 
 canvas.width = 1024;
 canvas.height = 576;
@@ -9,16 +10,28 @@ c.fillRect(0, 0, canvas.width, canvas.height)
 const gravity = 0.7;
 
 class Sprite {
-  constructor({ position, velocity }) {
+  constructor({ position, velocity, color = 'red' }) {
     this.position = position;
     this.velocity = velocity;
+    this.width = 50;
     this.height = 150;
     this.lastKey = '';
+    this.attackBox = {
+      position: this.position,
+      width: 100,
+      height: 50,
+    },
+    this.color = color,
+    this.isAttacking = false;
   }
 
   draw() {
-    c.fillStyle = 'red';
-    c.fillRect(this.position.x, this.position.y, 50, this.height)
+    c.fillStyle = this.color;
+    c.fillRect(this.position.x, this.position.y, this.width, this.height);
+
+    // attak box
+    c.fillStyle = 'green'
+    c.fillRect(this.attackBox.position.x, this.attackBox.position.y, this.attackBox.width, this.attackBox.height)
   }
 
   update() {
@@ -27,10 +40,24 @@ class Sprite {
     this.position.y += this.velocity.y;
 
     if (this.position.y + this.height >= canvas.height ) {
+      this.position.y = canvas.height - this.height;
       this.velocity.y = 0;
     } else {
       this.velocity.y += gravity;
     }
+
+  }
+
+  debug() {
+    console.log(this)
+  }
+
+  attack() {
+    this.isAttacking = true;
+
+    setTimeout(() => {
+      this.isAttacking = false;
+    }, 100);
   }
 }
 
@@ -52,8 +79,9 @@ const enemy = new Sprite({
   },
   velocity: {
     x: 0,
-    y: 5 
-  }
+    y: 0 
+  },
+  color: 'blue'
 })
 
 const keys = {
@@ -102,6 +130,16 @@ function animate() {
     enemy.velocity.x = 5;
   }
 
+  // detect collision
+  if (player.attackBox.position.x + player.attackBox.width >= enemy.position.x
+      && player.attackBox.position.x <= enemy.position.x + enemy.width
+      && player.attackBox.position.y + player.attackBox.height >= enemy.position.y
+      && player.attackBox.position.y <= enemy.position.y + enemy.height
+      && player.isAttacking
+  ) {
+    console.log('go-')
+  }
+
 }
 
 animate();
@@ -110,6 +148,10 @@ window.addEventListener('keydown', (event) => {
   console.log('keydown: ', event.code)
 
   switch (event.code) {
+// player
+    case 'Digit1': 
+    player.debug()
+    break;
 
     case 'KeyD':
       keys.KeyD.pressed = true;
@@ -125,6 +167,14 @@ window.addEventListener('keydown', (event) => {
       player.velocity.y = -20;
       break;
 
+      case 'Space': 
+      player.attack();
+      break;
+
+// enemy
+    case 'Digit2':
+      enemy.debug()
+      break;
 
     case 'ArrowRight':
       keys.ArrowRight.pressed = true;
