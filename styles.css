@@ -1,4 +1,34 @@
+div {
+  box-sizing: border-box
+}
+
 .wrapper {
   display: flex;
   justify-content: center;
+}
+
+.container {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 5px 20px;
+}
+
+.player {
+  background-color: red;
+  height: 30px;
+  width: 100%;
+}
+
+.enemy {
+  background-color: red;
+  height: 30px;
+}
+
+.timer {
+  background-color: yellow;
+  width: 100px;
+  height: 100px;
+  flex-shrink: 0;
 }

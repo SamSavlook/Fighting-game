@@ -1,18 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Fighting game</title>
   <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
   <div class="wrapper">
-    <canvas>
-  
-    </canvas>
+    <!-- container -->
+    <div style="position: relative">
+      <div class="container">
+        <!-- player health -->
+        <div style="position: relative; height: 30px; width: 100%; display: flex; justify-content: flex-end;">
+          <div class="player"></div>
+          <div style="position: absolute; background-color: blue; top: 0; bottom: 0;  right: 0; width: 100%;"
+            id="playerHealth"></div>
+        </div>
+        <!-- timer -->
+        <div class="timer"></div>
+
+        <!-- enemy health -->
+        <div style="position: relative; height: 30px; width: 100%;">
+          <div class="enemy"></div>
+          <div style="position: absolute; background-color: blue; top: 0; bottom: 0; left: 0; right: 0;"
+            id="enemyHealth"></div>
+        </div>
+
+      </div>
+      <canvas></canvas>
+    </div>
 
   </div>
-<script src="index.js"></script>
+  <script src="index.js"></script>
 </body>
+
 </html>

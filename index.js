@@ -5,7 +5,10 @@ const c = canvas.getContext('2d');
 canvas.width = 1024;
 canvas.height = 576;
 
-c.fillRect(0, 0, canvas.width, canvas.height)
+c.fillRect(0, 0, canvas.width, canvas.height);
+
+const enemyHealthEl = document.querySelector('#enemyHealth');
+const playerHealthEl = document.querySelector('#playerHealth');
 
 const gravity = 0.7;
 
@@ -27,6 +30,7 @@ class Sprite {
     },
     this.color = color,
     this.isAttacking = false;
+    this.health = 100;
   }
 
   draw() {
@@ -170,7 +174,8 @@ function animate() {
     rectangle2: enemy
   }) && player.isAttacking) {
     player.isAttacking = false;
-    console.log('go-')
+    enemy.health -= 20;
+    enemyHealthEl.style.width = enemy.health + '%'
   }
 
   if (rectangularCollision({
@@ -178,7 +183,8 @@ function animate() {
     rectangle2: player
   }) && enemy.isAttacking) {
     enemy.isAttacking = false;
-    console.log('enemey attack')
+    player.health -= 20;
+    playerHealthEl.style.width = player.health + '%'
   }
 
 }
